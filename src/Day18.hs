@@ -7,8 +7,8 @@ import Lib
 
 type Day18Input = ()
 
-parseInput :: String -> Day18Input
-parseInput = \x -> ()
+parseInput :: String -> Either () Day18Input
+parseInput = \x -> Right ()
 
 doDay18 :: IO ()
 doDay18 = doDay 18 parseInput part1 part2

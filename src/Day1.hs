@@ -7,8 +7,8 @@ import Lib
 
 type Day1Input = [Int]
 
-parseInput :: String -> Day1Input
-parseInput = (map read) . lines
+parseInput :: String -> Either () Day1Input
+parseInput = Right . (map read) . lines
 
 doDay1 :: IO ()
 doDay1 = doDay 1 parseInput part1 part2

@@ -24,8 +24,8 @@ parseLine s =
         _ -> error "Not a direction"
     _ -> error "len(words s) != 2"
 
-parseInput :: String -> Day2Input
-parseInput = (map parseLine) . lines
+parseInput :: String -> Either () Day2Input
+parseInput = Right . (map parseLine) . lines
 
 doDay2 :: IO ()
 doDay2 = doDay 2 parseInput part1 part2
