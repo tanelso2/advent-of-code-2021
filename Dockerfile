@@ -1,7 +1,4 @@
-FROM haskell
-
-RUN stack config set system-ghc --global true
-RUN stack setup
+FROM tanelso2/haskell-stack:latest
 
 WORKDIR /opt/example
 COPY . /opt/example
