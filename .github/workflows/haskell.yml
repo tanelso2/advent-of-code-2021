@@ -13,10 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-haskell@v1
-      with:
-        ghc-version: '8.10.3'
-        cabal-version: '3.2'
 
-    - name: Run tests
-      run: stack run
+    - name: Run
+      run: |
+        docker build . -t aoc2021:latest
+        docker run aoc2021:latest
