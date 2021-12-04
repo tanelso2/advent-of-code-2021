@@ -8,12 +8,14 @@ module Lib
 import Control.Exception
 
 data Result a =
-  NotImpl | Res a
-  deriving (Show)
+  NotImpl
+  | Res a
+  | InProgress (IO ())
 
 maybeDo :: Result a -> (a -> IO ()) -> IO ()
 maybeDo NotImpl _ = return ()
 maybeDo (Res x) f = f x
+maybeDo (InProgress io) _ = io
 
 printPart dayNum partNum res = do
   putStrLn $ "  Day " ++ show dayNum ++ " part " ++ show partNum ++ " : " ++ show res
