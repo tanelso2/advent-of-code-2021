@@ -4,9 +4,10 @@ module ListUtils
   , columns
   ) where
 
-import qualified Data.Map as M
+import Data.Hashable
+import qualified Data.HashMap.Strict as M
 
-elemCount :: (Foldable f, Ord a) => f a -> M.Map a Int
+elemCount :: (Foldable f, Ord a, Hashable a) => f a -> M.HashMap a Int
 elemCount = foldr (M.alter inc) M.empty
   where
     inc Nothing = Just 1

@@ -24,6 +24,8 @@ dependencies:
 - parsec
 - parallel
 - containers
+- unordered-containers
+- hashable
 
 library:
   source-dirs: src

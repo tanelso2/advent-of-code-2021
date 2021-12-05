@@ -5,4 +5,4 @@ COPY . /opt/example
 
 RUN stack build
 
-CMD stack run
+CMD stack run -- --forward

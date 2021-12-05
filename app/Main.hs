@@ -26,30 +26,43 @@ import Day23
 import Day24
 import Day25
 
-main = do
-    doDay1
-    doDay2
-    doDay3
-    doDay4
-    doDay5
-    doDay6
-    doDay7
-    doDay8
-    doDay9
-    doDay10
-    doDay11
-    doDay12
-    doDay13
-    doDay14
-    doDay15
-    doDay16
-    doDay17
-    doDay18
-    doDay19
-    doDay20
-    doDay21
-    doDay22
-    doDay23
-    doDay24
-    doDay25
+import System.Environment
 
+doReverse = do
+  args <- getArgs
+  return . not $ "--forward" `elem` args
+
+main = do
+  r <- doReverse
+  allDays <- return $ if r
+    then reverse allDays
+    else allDays
+  foldr1 (>>) allDays
+
+allDays = [
+    doDay1
+    , doDay2
+    , doDay3
+    , doDay4
+    , doDay5
+    , doDay6
+    , doDay7
+    , doDay8
+    , doDay9
+    , doDay10
+    , doDay11
+    , doDay12
+    , doDay13
+    , doDay14
+    , doDay15
+    , doDay16
+    , doDay17
+    , doDay18
+    , doDay19
+    , doDay20
+    , doDay21
+    , doDay22
+    , doDay23
+    , doDay24
+    , doDay25
+    ]

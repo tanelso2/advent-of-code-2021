@@ -60,8 +60,10 @@ library
   build-depends:
       base >=4.7 && <5
     , containers
+    , hashable
     , parallel
     , parsec
+    , unordered-containers
   default-language: Haskell2010
 
 executable aoc2021-exe
@@ -75,8 +77,10 @@ executable aoc2021-exe
       aoc2021
     , base >=4.7 && <5
     , containers
+    , hashable
     , parallel
     , parsec
+    , unordered-containers
   default-language: Haskell2010
 
 test-suite aoc2021-test
@@ -91,6 +95,8 @@ test-suite aoc2021-test
       aoc2021
     , base >=4.7 && <5
     , containers
+    , hashable
     , parallel
     , parsec
+    , unordered-containers
   default-language: Haskell2010
