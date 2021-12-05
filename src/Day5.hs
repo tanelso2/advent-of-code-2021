@@ -5,12 +5,13 @@ module Day5
 
 import Lib
 import ParseUtils
+import ListUtils
 
 import Control.Parallel (par, pseq)
 import Control.Parallel.Strategies
 
 import Data.List
-import qualified Data.Map.Strict as M
+import qualified Data.HashMap.Lazy as M
 import Text.ParserCombinators.Parsec hiding (Line)
 
 
@@ -65,12 +66,6 @@ getCoverage l
 noDiagonals :: [Line] -> [Line]
 noDiagonals = filter (\x -> isVertical x || isHorizontal x)
 
-elemCount :: (Ord a) => [a] -> M.Map a Int
-elemCount = foldr (M.alter f) M.empty
-  where
-    f Nothing = Just 1
-    f (Just x) = Just $ x+1
-
 parallel = False
 
 countReoccurences :: [Line] -> Int
@@ -78,6 +73,7 @@ countReoccurences ls = reoccurences
   where allPoints = (concat $ m getCoverage ls)
         groupedPoints = group $ sort allPoints
         reoccurences = length $ filter (\x -> length x > 1) groupedPoints
+        -- reoccurences' = M.size $ M.filter (\x -> x > 1) $ elemCount allPoints
         m = if parallel then map else parMap rpar
 
 type Day5Input = [Line]
