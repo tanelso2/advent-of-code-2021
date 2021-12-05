@@ -4,6 +4,7 @@ module Day5
   ) where
 
 import Lib
+import ParseUtils
 
 import Data.List
 import Text.ParserCombinators.Parsec hiding (Line)
@@ -22,23 +23,23 @@ isDiagonal ((x1, y1), (x2, y2)) = x1 /= x2 && y1 /= y2
 
 getHorizontalCoverage :: Line -> [Point]
 getHorizontalCoverage ((x1, y1), (x2, y2))
-  | x1 >= x2 = f x2 x1 y
-  | x2 > x1 = f x1 x2 y
+  | x1 >= x2 = f x2 x1
+  | x2 > x1 = f x1 x2
   where
     y = y1 -- y1 == y2 in a horizontal line
-    f lx hx y
+    f lx hx
       | lx > hx = []
-      | otherwise = (lx, y):(f (lx+1) hx y)
+      | otherwise = (lx, y):(f (lx+1) hx)
 
 getVerticalCoverage :: Line -> [Point]
 getVerticalCoverage ((x1, y1), (x2, y2))
-  | y1 >= y2 = f y2 y1 x
-  | y2 > y1 = f y1 y2 x
+  | y1 >= y2 = f y2 y1
+  | y2 > y1 = f y1 y2
   where
     x = x1 -- x1 == x2 in a vertical line
-    f ly hy x
+    f ly hy
       | ly > hy = []
-      | otherwise = (x, ly):(f (ly+1) hy x)
+      | otherwise = (x, ly):(f (ly+1) hy)
 
 getDiagonalCoverage :: Line -> [Point]
 getDiagonalCoverage ((x1, y1), (x2, y2))
@@ -67,17 +68,11 @@ countReoccurences ls = length reoccurences
 
 type Day5Input = [Line]
 
-parseInt :: Parser Int
-parseInt = do
-  optional $ many1 $ char ' '
-  x <- many1 digit
-  return $ read x
-
 parsePoint :: Parser Point
 parsePoint = do
-  x <- parseInt
+  x <- int
   char ','
-  y <- parseInt
+  y <- int
   return $ (x,y)
 
 parseLine :: Parser Line
@@ -98,7 +93,7 @@ doDay5 :: IO ()
 doDay5 = doDay 5 parseInput part1 part2
 
 part1 :: Day5Input -> Result Int
-part1 xs = Res $ countReoccurences $ noDiagonals xs
+part1 xs = Verified 5169 $ countReoccurences $ noDiagonals xs
 
 part2 :: Day5Input -> Result Int
-part2 xs = Res $ countReoccurences $ xs
+part2 xs = Verified 22083 $ countReoccurences $ xs

@@ -36,7 +36,7 @@ handleDirection (h,d) dir =
     Down x -> (h, d+x)
     Up x -> (h, d-x)
 
-part1 x = Res $ h * d
+part1 x = Verified 1868935 $ h * d
   where (h,d) = finalPos x
         finalPos = foldl handleDirection (0,0)
 
@@ -46,7 +46,7 @@ handleDirectionWAim (h,d,a) dir =
     Up x -> (h,d,a-x)
     Forward x -> (h+x,d+(a*x),a)
 
-part2 x = Res $ h * d
+part2 x = Verified 1965970888 $ h * d
   where (h,d,_) = finalPos x
         finalPos = foldl handleDirectionWAim (0,0,0)
 

@@ -11,11 +11,18 @@ data Result a =
   NotImpl
   | Res a
   | InProgress (IO ())
+  | Verified a a
 
-maybeDo :: Result a -> (a -> IO ()) -> IO ()
+maybeDo :: (Eq a, Show a) => Result a -> (a -> IO ()) -> IO ()
 maybeDo NotImpl _ = return ()
 maybeDo (Res x) f = f x
 maybeDo (InProgress io) _ = io
+maybeDo (Verified x y) f
+  | x == y = do
+    putStr "✓"
+    maybeDo (Res x) f
+  | otherwise = do
+    putStrLn $ "Could not verify: Expected " ++ show x ++ " /= Result " ++ show y
 
 printPart dayNum partNum res = do
   putStrLn $ "  Day " ++ show dayNum ++ " part " ++ show partNum ++ " : " ++ show res
@@ -24,7 +31,7 @@ filename n = "inputs/" ++ "day" ++ show n ++ ".input"
 
 doDay n parseInput p1 p2 = doDayWTest n parseInput p1 p2 Nothing
 
-doDayWTest :: (Show a, Show b, Show e) => Int -> (String -> Either e i) -> (i -> Result a) -> (i -> Result b) -> Maybe (i -> IO ()) -> IO ()
+doDayWTest :: (Show a, Show b, Show e, Eq a, Eq b) => Int -> (String -> Either e i) -> (i -> Result a) -> (i -> Result b) -> Maybe (i -> IO ()) -> IO ()
 doDayWTest n parseInput part1 part2 maybeTest = do
   rawOrExc <- try $ readFile $ filename n :: IO (Either IOException String)
   case rawOrExc of

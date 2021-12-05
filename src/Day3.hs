@@ -50,7 +50,7 @@ mostCommonBin = (map mostCommon) . columns'
 leastCommonBin = bitFlip . mostCommonBin
 
 part1 :: Day3Input -> Result Int
-part1 s = Res $ epsilon * gamma
+part1 s = Verified 741950 $ epsilon * gamma
   where
     gamma = readBinary binGamma
     epsilon = readBinary binEpsilon
@@ -64,7 +64,7 @@ getCandidate x xs = c
     f (b:c:xs) = if b == x then c else f (c:xs)
 
 part2 :: Day3Input -> Result Int
-part2 s = Res $ rO2 * rCO2
+part2 s = Verified 903810 $ rO2 * rCO2
   where
     bins = lines s
     binO2 = filterDownBy mostCommonBin bins 0

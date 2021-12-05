@@ -51,6 +51,7 @@ library
       Day8
       Day9
       Lib
+      ParseUtils
   other-modules:
       Paths_aoc2021
   hs-source-dirs:

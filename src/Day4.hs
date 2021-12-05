@@ -7,6 +7,7 @@ import Data.List
 import Text.ParserCombinators.Parsec
 
 import Lib
+import ParseUtils
 
 data BingoSpace =
   Marked Int
@@ -25,12 +26,6 @@ ntimes n p = do
   x <- p
   xs <- ntimes (n-1) p
   return $ x:xs
-
-parseInt :: Parser Int
-parseInt = do
-  optional $ many1 $ char ' '
-  x <- many1 digit
-  return $ read x
 
 parseBingoSpace :: Parser BingoSpace
 parseBingoSpace = do
@@ -122,14 +117,14 @@ boardScore b = sum numbers
         f (Marked _) = 0
 
 part1 :: Day4Input -> Result Int
-part1 (c,b) = Res $
+part1 (c,b) = Verified 38913 $
   case callNumbers c b of
     Nothing -> 0
     Just (winners, winningNum) ->
       winningNum * (boardScore $ head winners)
 
 part2 :: Day4Input -> Result Int
-part2 (c,b) = Res $
+part2 (c,b) = Verified 16836 $
   case callNumbersFindLast c b of
     Nothing -> 0
     Just (lastWinner, lastWinningNum) ->
