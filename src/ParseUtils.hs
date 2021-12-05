@@ -2,6 +2,7 @@ module ParseUtils
   (
   parseInt
   , int
+  , ntimes
   ) where
 
 import Text.ParserCombinators.Parsec
@@ -13,3 +14,12 @@ parseInt = do
   return $ read x
 
 int = parseInt
+
+ntimes :: Int -> Parser a -> Parser [a]
+ntimes 1 p = do
+  x <- p
+  return $ [x]
+ntimes n p = do
+  x <- p
+  xs <- ntimes (n-1) p
+  return $ x:xs

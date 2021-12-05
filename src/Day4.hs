@@ -7,6 +7,7 @@ import Data.List
 import Text.ParserCombinators.Parsec
 
 import Lib
+import ListUtils
 import ParseUtils
 
 data BingoSpace =
@@ -17,15 +18,6 @@ data BingoSpace =
 type BingoBoard = [[BingoSpace]]
 
 type Day4Input = ([Int], [BingoBoard])
-
-ntimes :: Int -> Parser a -> Parser [a]
-ntimes 1 p = do
-  x <- p
-  return $ [x]
-ntimes n p = do
-  x <- p
-  xs <- ntimes (n-1) p
-  return $ x:xs
 
 parseBingoSpace :: Parser BingoSpace
 parseBingoSpace = do
@@ -48,7 +40,6 @@ parseCallNumbers :: Parser [Int]
 parseCallNumbers = do
   x <- sepBy1 parseInt $ oneOf ","
   return x
-
 
 parseDay4 :: Parser Day4Input
 parseDay4 = do
@@ -77,11 +68,6 @@ doDay4 = do
 
   doDay 4 parseInput part1 part2
 
-columns' :: [[a]] -> [[a]]
-columns' xs = foldr1 f $ map (map (:[])) xs
-  where
-    f line acc = zipWith (++) line acc
-
 markNumber :: Int -> BingoBoard -> BingoBoard
 markNumber n b = map (\l -> map f l) b
   where
@@ -93,7 +79,7 @@ marked (UnMarked _) = False
 marked (Marked _) = True
 
 isWinner :: BingoBoard -> Bool
-isWinner b = any id $ map (all marked) $ b ++ columns' b
+isWinner b = any id $ map (all marked) $ b ++ columns b
 
 callNumbers :: [Int] -> [BingoBoard] -> Maybe ([BingoBoard], Int)
 callNumbers [] _ = Nothing

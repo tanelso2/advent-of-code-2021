@@ -7,6 +7,8 @@ import Lib
 
 import Data.List
 
+import ListUtils
+
 type Day3Input = String
 
 parseInput :: String -> Either () Day3Input
@@ -14,16 +16,6 @@ parseInput = Right
 
 doDay3 :: IO ()
 doDay3 = doDayWTest 3 parseInput part1 part2 Nothing
-
-columns' :: [[a]] -> [[a]]
-columns' xs = foldr1 f $ map (map (:[])) xs
-  where
-    f line acc = zipWith (++) line acc
-
-columns :: String -> [String]
-columns s = foldr1 f $ map (map (:[])) $ lines s
-  where
-    f line acc = zipWith (++) line acc
 
 bitFlip :: [Char] -> [Char]
 bitFlip [] = []
@@ -45,7 +37,7 @@ mostCommon xs = if o >= z then '1' else '0'
     z = length $ filter (=='0') xs
 
 mostCommonBin :: [String] -> String
-mostCommonBin = (map mostCommon) . columns'
+mostCommonBin = (map mostCommon) . columns
 
 leastCommonBin = bitFlip . mostCommonBin
 
@@ -55,7 +47,7 @@ part1 s = Verified 741950 $ epsilon * gamma
     gamma = readBinary binGamma
     epsilon = readBinary binEpsilon
     binEpsilon = bitFlip binGamma
-    binGamma = map mostCommon $ columns s
+    binGamma = mostCommonBin $ lines s
 
 getCandidate :: String -> [String] -> String
 getCandidate x xs = c
