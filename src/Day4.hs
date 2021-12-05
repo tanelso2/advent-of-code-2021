@@ -116,7 +116,7 @@ callNumbersFindLast (n:ns) bs = if length losers == 0
         (winners, losers) = partition isWinner newBoards
 
 boardScore :: BingoBoard -> Int
-boardScore b = foldr1 (+) numbers
+boardScore b = sum numbers
   where numbers = concatMap (\r -> map f r) b
         f (UnMarked x) = x
         f (Marked _) = 0
