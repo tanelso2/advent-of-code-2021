@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE AllowAmbiguousTypes #-}
 module ListUtils
   (
   elemCount
@@ -7,8 +9,10 @@ module ListUtils
 import Data.Hashable
 import qualified Data.HashMap.Strict as M
 
-elemCount :: (Foldable f, Ord a, Hashable a) => f a -> M.HashMap a Int
-elemCount = foldr (M.alter inc) M.empty
+import GenericMap
+
+elemCount :: (Foldable f, Ord a, Hashable a, Map m a Int) => f a -> m
+elemCount = foldr (alter inc) empty
   where
     inc Nothing = Just 1
     inc (Just x) = Just $ x+1
