@@ -5,6 +5,7 @@ module Day6
 
 import Lib
 import ParseUtils
+import ListUtils
 
 import qualified Data.IntMap.Strict as M
 
@@ -43,10 +44,10 @@ nextGen' old = M.foldrWithKey f M.empty old
           | k == 0 = mapPlus 6 v $ mapPlus 8 v m
           | otherwise = mapPlus (k-1) v m
 
-elemCount = foldr (M.alter inc) M.empty
-  where
-    inc Nothing = Just 1
-    inc (Just x) = Just (x+1)
+-- elemCount = foldr (M.alter inc) M.empty
+--   where
+--     inc Nothing = Just 1
+--     inc (Just x) = Just (x+1)
 
 part1 :: Day6Input -> Result Int
 part1 xs = Verified 379414 $ length $ head $ drop 80 gens

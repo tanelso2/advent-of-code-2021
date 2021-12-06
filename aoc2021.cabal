@@ -50,6 +50,7 @@ library
       Day7
       Day8
       Day9
+      GenericMap
       Lib
       ListUtils
       ParseUtils
