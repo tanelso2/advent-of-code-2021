@@ -71,8 +71,8 @@ collectBasin g (x,y) = collect [(x,y)] S.empty
       | S.member p acc = collect ps acc
       | v == 9 = collect ps acc
       | otherwise = collect ps' acc'
-        where
-          ps' = ps ++ (filter ((>v) . fromJust . (getInGrid g)) ns
+      where
+          ps' = ps ++ (filter ((>v) . fromJust . (getInGrid g)) ns)
           ns = getNeighbors g p
           v = fromJust $ getInGrid g p
           acc' = S.insert p acc
