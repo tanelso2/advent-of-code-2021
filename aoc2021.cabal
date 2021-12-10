@@ -61,6 +61,7 @@ library
   build-depends:
       base >=4.7 && <5
     , containers
+    , extra >=1.7.10
     , hashable
     , parallel
     , parsec
@@ -78,6 +79,7 @@ executable aoc2021-exe
       aoc2021
     , base >=4.7 && <5
     , containers
+    , extra >=1.7.10
     , hashable
     , parallel
     , parsec
@@ -96,6 +98,7 @@ test-suite aoc2021-test
       aoc2021
     , base >=4.7 && <5
     , containers
+    , extra >=1.7.10
     , hashable
     , parallel
     , parsec

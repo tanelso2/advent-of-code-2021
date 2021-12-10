@@ -26,6 +26,7 @@ dependencies:
 - containers
 - unordered-containers
 - hashable
+- extra >= 1.7.10
 
 library:
   source-dirs: src
