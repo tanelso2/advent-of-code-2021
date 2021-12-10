@@ -79,4 +79,4 @@ collectBasin g (x,y) = collect [(x,y)] S.empty
 
 
 part2 :: Day9Input -> Result Int
-part2 g = Res $ sum $ take 3 $ sort $ map (length . (collectBasin g)) $ filter (isLowPoint g) $ allpoints g
+part2 g = Res $ product $ take 3 $ reverse $ sort $ map (length . (collectBasin g)) $ filter (isLowPoint g) $ allpoints g
