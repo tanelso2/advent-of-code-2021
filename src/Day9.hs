@@ -64,9 +64,19 @@ part1 g = Verified 570 res
   where res = sum $ map (+1) $ lowPointValues g
 
 collectBasin :: Grid -> (Int,Int) -> [(Int,Int)]
-collectBasin g (x,y) = S.toList collected
+collectBasin g (x,y) = collect [(x,y)] S.empty
   where
-    collected = S.empty
+    collect [] acc = S.toList acc
+    collect (p:ps) acc
+    | S.member p acc = collect ps acc
+    | v == 9 = collect ps acc
+    | otherwise = collect ps' acc'
+    where
+      ps' = ps ++ (filter ((>v) . fromJust . (getInGrid g)) ns
+      ns = getNeighbors g p
+      v = fromJust $ getInGrid g p
+      acc' = S.insert p acc
+
 
 part2 :: Day9Input -> Result Int
-part2 xs = NotImpl
+part2 xs = Res $ sum $ take 3 $ sort $ map (length . collectBasin) $ filter (isLowPoint g) $ allpoints g
