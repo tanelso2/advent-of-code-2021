@@ -91,7 +91,7 @@ part1 xs = Verified 479 $ res
     res = length $ filter (`elem` [1,4,7,8]) allSignals
 
 part2 :: Day8Input -> Result Int
-part2 xs = Res $ sum allNums
+part2 xs = Verified 1041746 $ sum allNums
   where
     signalGroups = map decodeSignals xs
     allNums = map (read . concatMap show) signalGroups
