@@ -50,7 +50,8 @@ handleFlashes (g,acc) =
     Nothing -> (g,acc)
     Just (_,p,_) -> handleFlashes (g'', acc+1)
       where g' = alter markFlashed p g
-            g'' = foldr (alter incOcto) g' $ neighbors g p
+            ns = neighbors g p
+            g'' = alterBy (\_ currP -> currP `elem` ns) incOcto g'
 
 handleRound :: (Grid Octo, Int) -> (Grid Octo, Int)
 handleRound (g,acc) = (g''', acc')

@@ -5,6 +5,7 @@ module Grid
   , unGrid
   , mapi
   , alter
+  , alterBy
   , neighbors
   , neighbors'
   , neighborsBy
@@ -25,14 +26,19 @@ grid x = G x
 unGrid :: Grid a -> [[a]]
 unGrid (G x) = x
 
-type IdxGrid a b = Grid a
-
 instance Foldable Grid where
   foldr f acc g =
     foldr (\row acc' -> foldr f acc' row) acc $ unGrid g
 
 instance Functor Grid where
   fmap f g = G $ fmap (fmap f) $ unGrid g
+
+instance Traversable Grid where
+-- traverse :: (a -> f b) -> Grid a -> f (Grid b)
+-- traverse :: (a -> f b) -> [a] -> f [b]
+-- sequenceA :: [f a] -> f [a]
+  traverse f (G g) = fmap G res
+    where res = sequenceA $ map (traverse f) g
 
 type Index = (Int,Int)
 
@@ -45,6 +51,12 @@ alter f (x,y) g = mapi f' g
     f' v (i,j) = if (i,j) == (x,y)
                  then f v
                  else v
+
+alterBy :: (a -> Index -> Bool) -> (a -> a) -> Grid a -> Grid a
+alterBy predFn f g = mapi f' g
+  where f' v (i,j) = if predFn v (i,j)
+                     then f v
+                     else v
 
 neighbors :: Grid a -> Index -> [Index]
 neighbors = neighborsBy diagonals
@@ -83,7 +95,7 @@ bounds (G g) = (w,h)
 
 allpoints :: Grid a -> [Index]
 allpoints g = do
-  (w,h) <- return $ bounds g
+  let (w,h) = bounds g
   x <- init $ [0..w]
   y <- init $ [0..h]
   return (x,y)
