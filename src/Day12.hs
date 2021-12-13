@@ -92,7 +92,7 @@ getPathsFrom' g visited extraVisitAvailable x = do
     f i
       | canGoTo visited i =
         Just (i,False) -- go here, don't use extra visit
-      | isSmallCave i && i `elem` visited && extraVisitAvailable =
+      | extraVisitAvailable && isSmallCave i && i `elem` visited =
         Just (i,True) -- go here, use the extra visit
       | otherwise = Nothing -- delete this entry from the list
 

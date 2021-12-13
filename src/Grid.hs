@@ -11,20 +11,32 @@ module Grid
   , neighborsBy
   , (!?)
   , allpoints
+  , gridOfSize
+  , bounds
+  , inBounds
+  , pprint
   ) where
 
 import Data.Foldable
 import Data.Functor
+import Data.List
 
-import qualified ListUtils (mapi)
+import qualified ListUtils (mapi, columns)
 
 newtype Grid a = G [[a]]
+  deriving (Show)
 
 grid :: [[a]] -> Grid a
 grid x = G x
 
 unGrid :: Grid a -> [[a]]
 unGrid (G x) = x
+
+gridOfSize :: Int -> Int -> Grid ()
+gridOfSize w h = grid $ replicate w $ replicate h ()
+
+pprint :: Grid Char -> String
+pprint (G g) = intercalate "\n" $ ListUtils.columns g
 
 instance Foldable Grid where
   foldr f acc g =
