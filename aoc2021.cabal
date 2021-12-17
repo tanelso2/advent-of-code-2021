@@ -52,6 +52,7 @@ library
       Day9
       GenericMap
       Grid
+      Lens
       Lib
       ListUtils
       ParseUtils
