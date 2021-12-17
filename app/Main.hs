@@ -30,7 +30,7 @@ import System.Environment
 
 doReverse = do
   args <- getArgs
-  return . not $ "--forward" `elem` args
+  return $ "--reverse" `elem` args
 
 main = do
   r <- doReverse
@@ -54,7 +54,8 @@ allDays = [
     , doDay12
     , doDay13
     , doDay14
-    , doDay15
+    -- My solution for day 15, while correct, is insanely slow
+    -- , doDay15
     , doDay16
     , doDay17
     , doDay18
