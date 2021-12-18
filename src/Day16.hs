@@ -101,7 +101,10 @@ readBinString s = snd $ foldr f (1,0) s
     f _ _ = error "readBinary was sent something that wasn't 1 or 0"
 
 doDay16 :: IO ()
-doDay16 = doDay 16 parseInput part1 part2
+doDay16 = do
+  putStrLn $ parseInput "D2FE28"
+  putStrLn $ parseInput "38006F45291200"
+  doDay 16 parseInput part1 part2
 
 score :: Packet -> Int
 score (Literal (v,_) _) = v
