@@ -45,8 +45,12 @@ packet :: Parser Packet
 packet = do
   (ver,ty) <- headers
   case ty of
-    4 -> Literal (ver, ty) $ parseLiteralVal
-    _ -> Operator (ver, ty) $ operatorChildren
+    4 -> do
+      v <- parseLiteralVal
+      Literal (ver, ty) v
+    _ -> do
+      ps <- operatorChildren
+      Operator (ver, ty) ps
 
 operatorChildren :: Parser [Packet]
 operatorChildren = do
@@ -99,7 +103,7 @@ doDay16 = doDay 16 parseInput part1 part2
 
 score :: Packet -> Int
 score (Literal (v,_) _) = v
-score (Operator (v,_) ps) = v + sum $ map score ps
+score (Operator (v,_) ps) = v + (sum $ map score ps)
 
 part1 :: Day16Input -> Result Int
 part1 xs = Res $ score xs
