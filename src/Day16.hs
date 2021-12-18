@@ -65,6 +65,27 @@ operatorChildren = do
 parseInput :: String -> Either ParseError Day16Input
 parseInput s = parse packet "" $ hexToBin s
 
+hexToBin :: String -> String
+hexToBin [] = []
+hexToBin (x:xs) = v ++ hexToBin xs
+  where
+    v = case x of
+          '0' -> "0000"
+          '1' -> "0001"
+          '2' -> "0010"
+          '3' -> "0011"
+          '4' -> "0100"
+          '5' -> "0101"
+          '6' -> "0110"
+          '7' -> "0111"
+          '8' -> "1000"
+          '9' -> "1001"
+          'A' -> "1010"
+          'B' -> "1011"
+          'C' -> "1100"
+          'D' -> "1101"
+          'E' -> "1110"
+          'F' -> "1111"
 
 readBinString :: String -> Int
 readBinString s = snd $ foldr f (1,0) s
