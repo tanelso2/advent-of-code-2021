@@ -63,11 +63,23 @@ operatorChildren = do
 parseInput :: String -> Either ParseError Day16Input
 parseInput s = parse packet "" $ hexToBin s
 
+
+readBinString :: String -> Int
+readBinString s = snd $ foldr f (1,0) s
+  where
+    f '0' (place,acc) = (place*2,acc)
+    f '1' (place,acc) = (place*2,acc+place)
+    f _ _ = error "readBinary was sent something that wasn't 1 or 0"
+
 doDay16 :: IO ()
 doDay16 = doDay 16 parseInput part1 part2
 
+score :: Packet -> Int
+score (Literal (v,_) _) = v
+score (Operator (v,_) ps) = v + sum $ map score ps
+
 part1 :: Day16Input -> Result Int
-part1 xs = NotImpl
+part1 xs = Res $ score xs
 
 part2 :: Day16Input -> Result Int
 part2 xs = NotImpl
