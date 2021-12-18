@@ -5,6 +5,8 @@ module Day16
 
 import Lib
 
+import Control.Monad
+
 import Text.ParserCombinators.Parsec
 import ParseUtils
 
