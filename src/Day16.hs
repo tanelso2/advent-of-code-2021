@@ -30,12 +30,12 @@ parseLiteralVal = do
 middleGroup :: Parser [Char]
 middleGroup = do
   char '0'
-  return $ ntimes 4 binNum
+  ntimes 4 binNum
 
 finalGroup :: Parser [Char]
 finalGroup = do
   char '1'
-  return $ ntimes 4 binNum
+  ntimes 4 binNum
 
 headers :: Parser PacketHeaders
 headers = do
@@ -49,10 +49,10 @@ packet = do
   case ty of
     4 -> do
       v <- parseLiteralVal
-      Literal (ver, ty) v
+      return $ Literal (ver, ty) v
     _ -> do
       ps <- operatorChildren
-      Operator (ver, ty) ps
+      return $ Operator (ver, ty) ps
 
 operatorChildren :: Parser [Packet]
 operatorChildren = do
