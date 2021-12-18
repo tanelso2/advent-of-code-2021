@@ -62,7 +62,7 @@ operatorChildren = do
     numBits <- liftM readBinString $ ntimes 15 binNum
     thoseBits <- ntimes numBits binNum
     case parse (many packet) "" thoseBits of
-      Left e -> unexpected "Inner parse failed..."
+      Left e -> unexpected $ "Inner parse failed on: " ++ thoseBits
       Right ps -> return ps
   else do
     numPackets <- liftM readBinString $ ntimes 11 binNum
