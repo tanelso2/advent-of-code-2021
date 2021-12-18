@@ -102,8 +102,8 @@ readBinString s = snd $ foldr f (1,0) s
 
 doDay16 :: IO ()
 doDay16 = do
-  putStrLn $ parseInput "D2FE28"
-  putStrLn $ parseInput "38006F45291200"
+  putStrLn $ show $ parseInput "D2FE28"
+  putStrLn $ show $ parseInput "38006F45291200"
   doDay 16 parseInput part1 part2
 
 score :: Packet -> Int
