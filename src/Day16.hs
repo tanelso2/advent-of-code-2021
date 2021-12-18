@@ -25,12 +25,14 @@ parseLiteralVal :: Parser Int
 parseLiteralVal = do
    xs <- many middleGroup
    x <- finalGroup
-   return readBinString $ concat $ xs++[x]
+   return $ readBinString $ concat $ xs ++ [x]
 
+middleGroup :: Parser [Char]
 middleGroup = do
   char '0'
   return $ ntimes 4 binNum
 
+finalGroup :: Parser [Char]
 finalGroup = do
   char '1'
   return $ ntimes 4 binNum
