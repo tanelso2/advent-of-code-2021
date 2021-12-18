@@ -57,7 +57,7 @@ packet = do
 operatorChildren :: Parser [Packet]
 operatorChildren = do
   i <- binNum
-  if i == 0
+  if i == '0'
   then do
     numBits <- liftM readBinString $ ntimes 15 binNum
     thoseBits <- ntimes numBits binNum
