@@ -15,6 +15,7 @@ type Day16Input = Packet
 data Packet = 
    Literal PacketHeaders Int 
    | Operator PacketHeaders [Packet]
+   deriving (Show)
 
 type PacketHeaders = (Int,Int)
 
