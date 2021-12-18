@@ -23,7 +23,7 @@ parseLiteralVal :: Parser Int
 parseLiteralVal = do
    xs <- many middleGroup
    x <- finalGroup
-   return readBinString $ xs++[x]
+   return readBinString $ concat $ xs++[x]
 
 middleGroup = do
   char '0'
@@ -36,15 +36,15 @@ finalGroup = do
 headers :: Parser PacketHeaders
 headers = do
   ver <- ntimes 3 binNum
-  type <- ntimes 3 binNum
-  return (readBinString ver, readBinString type)
+  ty <- ntimes 3 binNum
+  return (readBinString ver, readBinString ty)
 
 packet :: Parser Packet
 packet = do
-  (ver,type) <- headers
-  case type of
-    4 -> Literal (ver, type) $ parseLiteralVal
-    _ -> Operator (ver, type) $ operatorChildren
+  (ver,ty) <- headers
+  case ty of
+    4 -> Literal (ver, ty) $ parseLiteralVal
+    _ -> Operator (ver, ty) $ operatorChildren
 
 operatorChildren :: Parser [Packet]
 operatorChildren = do
