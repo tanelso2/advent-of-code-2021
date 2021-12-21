@@ -6,12 +6,15 @@ module ParseUtils
   ) where
 
 import Text.ParserCombinators.Parsec
+import Data.Maybe
 
 parseInt :: Parser Int
 parseInt = do
   optional $ many1 $ char ' '
+  neg <- optionMaybe $ char '-'
   x <- many1 digit
-  return $ read x
+  let v = read x
+  return $ if isJust neg then -v else v
 
 int = parseInt
 
